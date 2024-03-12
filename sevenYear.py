@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import timedelta
 
-o = input("File path\n")
+o = input("File path\n").replace("& ","").replace("'","")
 
 try: 
     df = pd.read_excel (o, keep_default_na=False)
@@ -28,7 +28,7 @@ try:
     df["Vat"] = round((df["Premium"] + df["Stamp"]) * 7/100,2)
     # add total
     df["Total"] = round(df["Premium"] + df["Stamp"] + df["Vat"],2)
-    # delte duplicate
+    # delete duplicate
     df = df.drop_duplicates(subset=['IMEI สินค้า'], keep='last')
     # convert date
     date = pd.to_datetime(df["วันลงทะเบียน"], format="%d/%m/%Y", errors="coerce")
@@ -42,11 +42,11 @@ try:
     df_dup = df_dup.drop(df1[df1["IMEI สินค้า"].duplicated() == False].index, inplace=False)
 
     # export
-    with pd.ExcelWriter('output.xlsx') as writer:  # doctest: +SKIP
+    with pd.ExcelWriter('output.xlsx') as writer:
         df.to_excel(writer, sheet_name='7Y')
         df_dup.to_excel(writer, sheet_name='Dup')
 
     print("Success")
 
-except:
-    print("Some Mistake")
+except Exception as e:
+    print("Some Mistake, Please Check File.",e)
