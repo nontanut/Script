@@ -19,9 +19,10 @@ try:
     df["Total"] = round(df["Premium"] + df["Stamp"] + df["Vat"],2)
     # delete duplicate
     df = df.drop_duplicates(subset=["IMEI สินค้า"], keep='last')
-    # convert date
+    # convert str to date
     str_to_date = pd.to_datetime(df["วันลงทะเบียน"],dayfirst=True)
     df["วันลงทะเบียน"] = str_to_date
+    # calculate date
     date = pd.to_datetime(str_to_date, format="%d%m%Y", errors="coerce")
     ninety_day = timedelta(days=90)
     end_day = date + ninety_day
