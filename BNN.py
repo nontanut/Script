@@ -46,9 +46,18 @@ try:
     str_to_date = pd.to_datetime(df["วันลงทะเบียน"],dayfirst=True)
     df["วันลงทะเบียน"] = str_to_date
     # calculate date
-    date = pd.to_datetime(str_to_date, format="%d%m%Y", errors="coerce")
-    ninety_day = timedelta(days=90)
-    end_day = date + ninety_day
+    if (sheet_name == "90 Day"):
+        date = pd.to_datetime(str_to_date, format="%d%m%Y", errors="coerce")
+        three_month = timedelta(days=90)
+        end_day = date + three_month
+    elif (sheet_name == "180 Day"):
+        date = pd.to_datetime(str_to_date, format="%d%m%Y", errors="coerce")
+        six_month = timedelta(days=180)
+        end_day = date + six_month
+    else:
+        date = pd.to_datetime(str_to_date, format="%d%m%Y", errors="coerce")
+        one_year = timedelta(days=365)
+        end_day = date + one_year
 
     # insert colum date
     df.insert(17, "วันสิ้นสุด", end_day)
