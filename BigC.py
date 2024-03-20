@@ -50,12 +50,6 @@ try:
     with pd.ExcelWriter('output.xlsx') as writer:  # doctest: +SKIP
         df.to_excel(writer, sheet_name="All")
         df_dup.to_excel(writer, sheet_name="Dup")
-        if (df["Code"].any() == 70000090):
-            df.to_excel(writer, sheet_name="90")
-        elif (df["Code"].any() == 70000180):
-            df.to_excel(writer, sheet_name="180")
-        else:
-            df.to_excel(writer, sheet_name="365")
 
     print("Success")
 
